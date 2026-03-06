@@ -1,0 +1,19 @@
+{
+  "name": "fatal-road-accidents-armenia",
+  "version": "1.0.0",
+  "description": "Map of fatal road accidents in Armenia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stepany4/fatal-road-accidents-armenia.git"
+  },
+  "author": "Stepan Bazhov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stepany4/fatal-road-accidents-armenia/issues"
+  },
+  "homepage": "https://github.com/stepany4/fatal-road-accidents-armenia#readme"
+}
