@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Все смертельные ДТП в Армении 2023–2026</title>
+<title>All Fatal Road Accidents in Armenia 2023–2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -42,35 +42,35 @@
 <div id="map"></div>
 
 <div id="panel">
-  <h2>Смертельные ДТП</h2>
-  <div class="sub">Армения · 2023–2026 · МВД / Спасательная служба</div>
-  <div class="legend-row"><div class="dot" style="width:10px;height:10px;background:#e67e22;"></div><span>1 погибший</span></div>
-  <div class="legend-row"><div class="dot" style="width:14px;height:14px;background:#e74c3c;"></div><span>2 погибших</span></div>
-  <div class="legend-row"><div class="dot" style="width:18px;height:18px;background:#8e1515;"></div><span>3+ погибших</span></div>
+  <h2>Fatal Road Accidents</h2>
+  <div class="sub">Armenia · 2023–2026 · MIA / Rescue Service</div>
+  <div class="legend-row"><div class="dot" style="width:10px;height:10px;background:#e67e22;"></div><span>1 fatality</span></div>
+  <div class="legend-row"><div class="dot" style="width:14px;height:14px;background:#e74c3c;"></div><span>2 fatalities</span></div>
+  <div class="legend-row"><div class="dot" style="width:18px;height:18px;background:#8e1515;"></div><span>3+ fatalities</span></div>
   <div class="sep"></div>
   <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#3498db;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2023</span></div>
   <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#27ae60;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2024</span></div>
   <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#e74c3c;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2025</span></div>
   <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#9b59b6;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2026</span></div>
   <div class="sep"></div>
-  <div style="font-size:11px;color:#999;">Нажмите маркер для деталей</div>
+  <div style="font-size:11px;color:#999;">Click a marker for details</div>
 </div>
 
 <div id="filters">
-  <h3>Год</h3>
+  <h3>Year</h3>
   <label><input type="checkbox" class="yr" value="2023" checked><span style="color:#3498db;">● 2023</span></label>
   <label><input type="checkbox" class="yr" value="2024" checked><span style="color:#27ae60;">● 2024</span></label>
   <label><input type="checkbox" class="yr" value="2025" checked><span style="color:#e74c3c;">● 2025</span></label>
   <label><input type="checkbox" class="yr" value="2026" checked><span style="color:#9b59b6;">● 2026</span></label>
   <div style="border-top:1px solid #eee;margin:8px 0;"></div>
-  <h3>Жертвы</h3>
-  <label><input type="checkbox" class="dth" value="1" checked><span>1 погибший</span></label>
-  <label><input type="checkbox" class="dth" value="2" checked><span>2 погибших</span></label>
-  <label><input type="checkbox" class="dth" value="3" checked><span>3+ погибших</span></label>
+  <h3>Fatalities</h3>
+  <label><input type="checkbox" class="dth" value="1" checked><span>1 fatality</span></label>
+  <label><input type="checkbox" class="dth" value="2" checked><span>2 fatalities</span></label>
+  <label><input type="checkbox" class="dth" value="3" checked><span>3+ fatalities</span></label>
 </div>
 
 <div id="counter">
-  Показано: <b id="shown">0</b> из <b id="total">0</b> инцидентов · <b id="deaths_shown">0</b> погибших
+  Showing: <b id="shown">0</b> of <b id="total">0</b> incidents · <b id="deaths_shown">0</b> fatalities
 </div>
 
 <script>
@@ -92,7 +92,7 @@ function icon(deaths, year) {
 }
 
 function popup(d) {
-  const dk = d.deaths === 1 ? '1 погибший' : `<b style="color:#c0392b">${d.deaths} погибших</b>`;
+  const dk = d.deaths === 1 ? '1 fatality' : `<b style="color:#c0392b">${d.deaths} fatalities</b>`;
   return `<div style="font-family:'Segoe UI',sans-serif;min-width:210px;max-width:280px;">
     <div style="font-weight:bold;font-size:13px;margin-bottom:3px;">${d.location}</div>
     <div style="font-size:11px;color:#888;margin-bottom:6px;">${d.road}</div>
@@ -105,105 +105,105 @@ function popup(d) {
 }
 
 const incidents = [
-  // ── ЕРЕВАН ──────────────────────────────────────────────────────────
-  { year:2023, date:'25.01.2023 22:03', lat:40.161093, lng:44.484969, deaths:1, location:'ул. Арагаца, 6', road:'Ереван, Шенгавит', vehicles:'Легковой а/м', cause:'Врезался в стену; тело заблокировано' },
-  { year:2023, date:'20.07.2023 00:34', lat:40.172757, lng:44.512463, deaths:1, location:'Агатангехоса / Хоренаци', road:'Ереван, Кентрон', vehicles:'Легковой а/м', cause:'Столкновение; тело заблокировано' },
-  { year:2023, date:'26.11.2023 09:28', lat:40.205609, lng:44.505783, deaths:2, location:'пр. Комитаса (ш. Раффи)', road:'Ереван, Арабкир', vehicles:'Audi + ВАЗ', cause:'Столкновение; 1 на месте, 1 в больнице (К.Х. 1957)' },
-  { year:2023, date:'31.12.2023 21:40', lat:40.125122, lng:44.494360, deaths:1, location:'Арташатское шоссе, 5', road:'Ереван, Шенгавит', vehicles:'ВАЗ + Toyota', cause:'Лобовое столкн.; погиб В.Ш. 1981' },
-  { year:2024, date:'12.01.2024 12:35', lat:40.209077, lng:44.522238, deaths:1, location:'ул. Мамиконянц', road:'Ереван, Арабкир', vehicles:'Детали не уточнены', cause:'Смертельное ДТП' },
-  { year:2024, date:'06.03.2024 02:20', lat:40.218478, lng:44.464077, deaths:1, location:'Аштаракское шоссе → ул. Алабяна', road:'Ереван, Ачапняк', vehicles:'Mercedes-Benz', cause:'Потерял управление, перевернулся; погиб В.К. 2000' },
-  { year:2024, date:'12.08.2024 21:55', lat:40.195663, lng:44.537858, deaths:1, location:'пр. Мясникяна, 27', road:'Ереван, Аван', vehicles:'Мотоцикл Honda', cause:'Мотоциклист в бетонное ограждение; А.Х. 1993' },
-  { year:2024, date:'17.10.2024 17:31', lat:40.204839, lng:44.461360, deaths:1, location:'Квартал G1', road:'Ереван, Ачапняк', vehicles:'Toyota + Mercedes-Benz', cause:'Toyota в стену после столкн.; В.С. 1966' },
-  { year:2025, date:'12.09.2025 10:17', lat:40.117894, lng:44.482734, deaths:1, location:'Арташатское шоссе, 37/2', road:'Ереван, Шенгавит', vehicles:'Mazda', cause:'В разделительное ограждение, перевернулась; С.Г. 2002' },
-  { year:2025, date:'14.09.2025 08:16', lat:40.141183, lng:44.468778, deaths:1, location:'ул. Арарацян', road:'Ереван, Шенгавит', vehicles:'Opel + прицеп', cause:'Opel в припаркованный прицеп; С.Д. 1993' },
-  { year:2025, date:'23.11.2025 04:54', lat:40.191545, lng:44.482455, deaths:1, location:'Киевский мост', road:'Ереван, Арабкир/Ачапняк', vehicles:'Детали не уточнены', cause:'Столкновение на мосту' },
-  { year:2025, date:'26.12.2025 14:59', lat:40.216829, lng:44.468055, deaths:1, location:'Аштаракское шоссе', road:'Ереван, Ачапняк', vehicles:'Детали не уточнены', cause:'Тяжёлое столкновение' },
+  // ── YEREVAN ─────────────────────────────────────────────────────────
+  { year:2023, date:'25.01.2023 22:03', lat:40.161093, lng:44.484969, deaths:1, location:'Aragats St., 6', road:'Yerevan, Shengavit', vehicles:'Passenger car', cause:'Hit a wall; driver trapped inside' },
+  { year:2023, date:'20.07.2023 00:34', lat:40.172757, lng:44.512463, deaths:1, location:'Agathangelos / Khorenatsi', road:'Yerevan, Kentron', vehicles:'Passenger car', cause:'Collision; driver trapped inside' },
+  { year:2023, date:'26.11.2023 09:28', lat:40.205609, lng:44.505783, deaths:2, location:'Komitas Ave. (near Raffi school)', road:'Yerevan, Arabkir', vehicles:'Audi + VAZ', cause:'Collision; 1 dead on scene, 1 died in hospital (K.H. b.1957)' },
+  { year:2023, date:'31.12.2023 21:40', lat:40.125122, lng:44.494360, deaths:1, location:'Artashat Highway, 5', road:'Yerevan, Shengavit', vehicles:'VAZ + Toyota', cause:'Head-on collision; driver V.Sh. b.1981 killed' },
+  { year:2024, date:'12.01.2024 12:35', lat:40.209077, lng:44.522238, deaths:1, location:'Mamikonyantz St.', road:'Yerevan, Arabkir', vehicles:'Details unknown', cause:'Fatal crash' },
+  { year:2024, date:'06.03.2024 02:20', lat:40.218478, lng:44.464077, deaths:1, location:'Ashtarak Hwy → Alabyan St.', road:'Yerevan, Achapnyak', vehicles:'Mercedes-Benz', cause:'Lost control, rolled over; driver V.K. b.2000 killed' },
+  { year:2024, date:'12.08.2024 21:55', lat:40.195663, lng:44.537858, deaths:1, location:'Myasnikyan Ave., 27', road:'Yerevan, Avan', vehicles:'Honda motorcycle', cause:'Motorcyclist hit concrete barrier; A.Kh. b.1993 killed' },
+  { year:2024, date:'17.10.2024 17:31', lat:40.204839, lng:44.461360, deaths:1, location:'Block G1, Sasuntsi Davit St.', road:'Yerevan, Achapnyak', vehicles:'Toyota + Mercedes-Benz', cause:'Toyota hit wall after collision; driver V.S. b.1966 killed' },
+  { year:2025, date:'12.09.2025 10:17', lat:40.117894, lng:44.482734, deaths:1, location:'Artashat Highway, 37/2', road:'Yerevan, Shengavit', vehicles:'Mazda', cause:'Hit median barrier, rolled over; S.G. b.2002 killed' },
+  { year:2025, date:'14.09.2025 08:16', lat:40.141183, lng:44.468778, deaths:1, location:'Araratyan St.', road:'Yerevan, Shengavit', vehicles:'Opel + parked trailer', cause:'Opel hit parked trailer; driver S.D. b.1993 killed' },
+  { year:2025, date:'23.11.2025 04:54', lat:40.191545, lng:44.482455, deaths:1, location:'Kyiv Bridge', road:'Yerevan, Arabkir/Achapnyak', vehicles:'Details unknown', cause:'Collision on bridge over Hrazdan river' },
+  { year:2025, date:'26.12.2025 14:59', lat:40.216829, lng:44.468055, deaths:1, location:'Ashtarak Highway', road:'Yerevan, Achapnyak', vehicles:'Details unknown', cause:'Severe collision' },
 
-  // ── М-4 ЕРЕВАН–СЕВАН–ИДЖЕВАН ────────────────────────────────────────
-  { year:2023, date:'07.06.2023 12:48', lat:40.39768436218149, lng:44.66993912421997, deaths:1, location:'М-4, км 30', road:'М-4 (Ереван–Севан), Чаренцаван', vehicles:'BMW', cause:'Упал в ущелье 50м' },
-  { year:2023, date:'23.06.2023 09:22', lat:40.35928019023859, lng:44.635758554050014, deaths:1, location:'М-4, км 25 (пов. Цайни)', road:'М-4 (Ереван–Севан)', vehicles:'Opel', cause:'Упал в ущелье 70м' },
-  { year:2023, date:'24.07.2023 14:31', lat:40.346493498139104, lng:44.63138381224796, deaths:1, location:'М-4, км 23 (пов. Цайни)', road:'М-4 (Ереван–Севан)', vehicles:'Nissan', cause:'Врезался в ограждение (пассажир)' },
-  { year:2023, date:'17.07.2023 14:05', lat:40.72233134851129, lng:44.85284844292736, deaths:1, location:'М-4, км 93', road:'М-4 (Иджеван–Ереван)', vehicles:'Opel', cause:'Опрокидывание; водитель Г.А.' },
-  { year:2023, date:'08.08.2023 21:24', lat:40.4711388485019, lng:44.7443375245887, deaths:1, location:'М-4, км 41 (мост Qаghси)', road:'М-4 (Ереван–Севан)', vehicles:'Opel Vectra + Chrysler', cause:'Столкновение; погиб водитель' },
-  { year:2023, date:'26.12.2023 18:08', lat:40.25286395700201, lng:44.588961557149865, deaths:1, location:'М-4, ~км 22 (Shangri-La)', road:'М-4 (Ереван–Севан)', vehicles:'Toyota + Lada', cause:'Столкновение; погиб водитель А.Г.' },
-  { year:2024, date:'15.07.2024 21:34', lat:40.316198374523985, lng:44.62883570405794, deaths:1, location:'М-4, км 20', road:'М-4 (Ереван–Севан), Абовян', vehicles:'Infiniti', cause:'Упал в ущелье 70м (пассажир)' },
-  { year:2024, date:'20.07.2024 16:59', lat:40.316198374523985, lng:44.62883570405794, deaths:1, location:'М-4, км 20', road:'М-4 (Ереван–Севан), Абовян', vehicles:'Mitsubishi + Kia + Honda', cause:'Тройное столкновение; водитель погиб' },
-  { year:2024, date:'30.06.2024 16:46', lat:40.48241529977355, lng:44.762571765017064, deaths:1, location:'М-4, км 43', road:'М-4 (Ереван–Севан)', vehicles:'Mercedes + Opel + BMW', cause:'Тройное столкн.; пассажир А.Г.' },
-  { year:2024, date:'17.07.2024 01:01', lat:40.53452193752898, lng:44.87402752717715, deaths:1, location:'М-4, км 54', road:'М-4 (Севан–Ереван)', vehicles:'Mercedes-Benz + ЗИЛ', cause:'Столкновение; водитель Р.Х.' },
-  { year:2024, date:'14.08.2024 15:55', lat:40.61770038967384, lng:44.9520788168223, deaths:1, location:'М-4, км 74 (Цовагюх)', road:'М-4 (Ереван–Иджеван)', vehicles:'DAF + Opel', cause:'Столкновение; водитель Дж.Г.' },
-  { year:2025, date:'09.10.2025 19:05', lat:40.310085756581046, lng:44.62360089122059, deaths:2, location:'М-4, км 19', road:'М-4 (Ереван–Севан), Абовян', vehicles:'Mercedes-Benz + Lexus', cause:'Лобовое столкновение; 2 погибших' },
+  // ── M-4 YEREVAN–SEVAN–IJEVAN ────────────────────────────────────────
+  { year:2023, date:'07.06.2023 12:48', lat:40.39768436218149, lng:44.66993912421997, deaths:1, location:'M-4, km 30', road:'M-4 (Yerevan–Sevan), Charentsavan', vehicles:'BMW', cause:'Fell into gorge 50m' },
+  { year:2023, date:'23.06.2023 09:22', lat:40.35928019023859, lng:44.635758554050014, deaths:1, location:'M-4, km 25 (Tsayni curves)', road:'M-4 (Yerevan–Sevan)', vehicles:'Opel', cause:'Fell into gorge 70m' },
+  { year:2023, date:'24.07.2023 14:31', lat:40.346493498139104, lng:44.63138381224796, deaths:1, location:'M-4, km 23 (Tsayni curves)', road:'M-4 (Yerevan–Sevan)', vehicles:'Nissan', cause:'Hit guardrail; passenger killed' },
+  { year:2023, date:'17.07.2023 14:05', lat:40.72233134851129, lng:44.85284844292736, deaths:1, location:'M-4, km 93', road:'M-4 (Ijevan–Yerevan)', vehicles:'Opel', cause:'Rollover; driver G.A. killed' },
+  { year:2023, date:'08.08.2023 21:24', lat:40.4711388485019, lng:44.7443375245887, deaths:1, location:'M-4, km 41 (Kaghsi bridge)', road:'M-4 (Yerevan–Sevan)', vehicles:'Opel Vectra + Chrysler', cause:'Collision; driver killed' },
+  { year:2023, date:'26.12.2023 18:08', lat:40.25286395700201, lng:44.588961557149865, deaths:1, location:'M-4, ~km 22 (Shangri-La)', road:'M-4 (Yerevan–Sevan)', vehicles:'Toyota + Lada', cause:'Collision; driver A.G. killed' },
+  { year:2024, date:'15.07.2024 21:34', lat:40.316198374523985, lng:44.62883570405794, deaths:1, location:'M-4, km 20', road:'M-4 (Yerevan–Sevan), Abovyan', vehicles:'Infiniti', cause:'Fell into gorge 70m; passenger killed' },
+  { year:2024, date:'20.07.2024 16:59', lat:40.316198374523985, lng:44.62883570405794, deaths:1, location:'M-4, km 20', road:'M-4 (Yerevan–Sevan), Abovyan', vehicles:'Mitsubishi + Kia + Honda', cause:'Triple collision; driver killed' },
+  { year:2024, date:'30.06.2024 16:46', lat:40.48241529977355, lng:44.762571765017064, deaths:1, location:'M-4, km 43', road:'M-4 (Yerevan–Sevan)', vehicles:'Mercedes + Opel + BMW', cause:'Triple collision; passenger A.G. killed' },
+  { year:2024, date:'17.07.2024 01:01', lat:40.53452193752898, lng:44.87402752717715, deaths:1, location:'M-4, km 54', road:'M-4 (Sevan–Yerevan)', vehicles:'Mercedes-Benz + ZIL', cause:'Collision; driver R.Kh. killed' },
+  { year:2024, date:'14.08.2024 15:55', lat:40.61770038967384, lng:44.9520788168223, deaths:1, location:'M-4, km 74 (Tsovagyugh)', road:'M-4 (Yerevan–Ijevan)', vehicles:'DAF + Opel', cause:'Collision; driver Dzh.G. killed' },
+  { year:2025, date:'09.10.2025 19:05', lat:40.310085756581046, lng:44.62360089122059, deaths:2, location:'M-4, km 19', road:'M-4 (Yerevan–Sevan), Abovyan', vehicles:'Mercedes-Benz + Lexus', cause:'Head-on collision; 2 killed' },
 
-  // ── М-2 ЕРЕВАН–МЕГРИ ────────────────────────────────────────────────
-  { year:2023, date:'20.01.2023 13:30', lat:39.90777676234006, lng:44.60614282100605, deaths:1, location:'М-2, км 37 (Поqр Веди)', road:'М-2 (Ереван–Мегри)', vehicles:'Mercedes-Benz', cause:'Водитель М.С.' },
-  { year:2023, date:'23.03.2023 17:08', lat:38.926954869434816, lng:46.21983006222164, deaths:1, location:'М-2, км 4 (от Мегри)', road:'М-2 (Мегри–Ереван)', vehicles:'Mitsubishi Pajero iO', cause:'Упал в ущелье; водитель К.М.' },
-  { year:2023, date:'07.06.2023 11:10', lat:39.82059474090967, lng:44.73311207388715, deaths:1, location:'М-2, км 53 (Зодийский мост)', road:'М-2 (Ереван–Мегри)', vehicles:'ВАЗ + BMW', cause:'Столкновение; пассажир Г.Д.' },
-  { year:2023, date:'22.07.2023 01:08', lat:40.08920942116131, lng:44.45346817411554, deaths:1, location:'М-2, км 12 (Масис)', road:'М-2 (Ереван–Мегри)', vehicles:'Nissan Skyline + Mercedes (груз.)', cause:'Ночное столкн. с припарк. грузовиком' },
-  { year:2023, date:'27.07.2023', lat:40.04469292306809, lng:44.46203351668837, deaths:1, location:'М-2, км 17 (Айнтап)', road:'М-2 (Ереван–Мегри)', vehicles:'Ford', cause:'В металлическое ограждение; погиб ребёнок 2018 г.р.' },
-  { year:2023, date:'11.07.2023 03:34', lat:39.73701655719023, lng:45.298888675031115, deaths:2, location:'М-2, км 116 (Таперакан)', road:'М-2 (Ереван–Мегри)', vehicles:'Mercedes-Benz + КамАЗ', cause:'Б.Г. и С.Б. погибли' },
-  { year:2023, date:'23.07.2023', lat:39.92145486493988, lng:44.58441060515334, deaths:1, location:'М-2, км 35 (Таперакан)', road:'М-2 (Ереван–Мегри)', vehicles:'ВАЗ-2107', cause:'Опрокидывание; водитель Р.Х.' },
-  { year:2023, date:'21.05.2023 18:58', lat:39.80488216855541, lng:44.96959836692501, deaths:2, location:'М-2, км 82 (пов. Тигранашен)', road:'М-2 (Ереван–Мегри)', vehicles:'Toyota Corolla + ВАЗ', cause:'ВАЗ упал в ущелье 200м' },
-  { year:2023, date:'21.03.2023 16:39', lat:39.81974336665441, lng:44.99995665101129, deaths:1, location:'М-2, км 86 (Урцалanj)', road:'М-2 (Ереван–Мегри)', vehicles:'Грузовик МАН', cause:'Упал в ущелье 30м' },
-  { year:2023, date:'11.08.2023 11:06', lat:39.72893770369409, lng:45.392352655971344, deaths:3, location:'М-2, км 129 (Егегнадзор–Малишkа)', road:'М-2 (Ереван–Мегри)', vehicles:'Renault (груз.) + Mitsubishi', cause:'3 погибших при столкновении' },
-  { year:2023, date:'19.08.2023 11:25', lat:39.697654595582776, lng:45.44565745417597, deaths:1, location:'М-2, км 149 (у Вайка)', road:'М-2 (Ереван–Мегри)', vehicles:'Toyota', cause:'Опрокидывание; пассажир И.Р.' },
-  { year:2023, date:'20.08.2023', lat:39.81531181992831, lng:45.03875107884371, deaths:1, location:'М-2, км 94 (Зангакатун)', road:'М-2 (Ереван–Мегри)', vehicles:'Nissan Tiida + BMW X5', cause:'Столкновение; пассажир А.Х.' },
-  { year:2023, date:'28.09.2023 18:22', lat:39.738015864598644, lng:45.267713199191135, deaths:1, location:'М-2, км 114 (Арени)', road:'М-2 (Ереван–Мегри)', vehicles:'ВАЗ + Mercedes-Benz', cause:'Водитель С.Б.' },
-  { year:2023, date:'29.09.2023 17:37', lat:39.04404634657988, lng:46.2022256460835, deaths:1, location:'М-2, км 242 (Кажаран–Мегри)', road:'М-2 (Ереван–Мегри)', vehicles:'FAW (груз.)', cause:'Опрокидывание; пассажир погиб' },
-  { year:2023, date:'18.10.2023 10:37', lat:39.734832626613986, lng:45.2394252144071, deaths:1, location:'М-2, км 113 (Агавнадзор)', road:'М-2 (Ереван–Мегри)', vehicles:'VW Golf + Mercedes-Benz', cause:'Водитель А.Г.' },
-  { year:2023, date:'01.12.2023 11:27', lat:40.01759083352525, lng:44.46691723090211, deaths:1, location:'М-2, км 20 (Мхчян)', road:'М-2 (Ерасх–Ереван)', vehicles:'Kia + Hyundai', cause:'Водитель Р.П.' },
-  { year:2023, date:'18.12.2023 18:54', lat:39.695959488054164, lng:45.458732941724286, deaths:1, location:'М-2, км 150 (Вайк)', road:'М-2 (Ереван–Мегри)', vehicles:'Mercedes-Benz + Iveco', cause:'Водитель Г.С.' },
-  { year:2023, date:'22.12.2023 11:46', lat:39.7490466425325, lng:44.862806630892905, deaths:1, location:'М-2, км 3 (Ерасх–Парон Севак)', road:'М-2 ответвление', vehicles:'ВАЗ + Iveco', cause:'Водитель Г.Д.' },
-  { year:2023, date:'17.09.2023 21:16', lat:40.097538185161206, lng:44.45844348490821, deaths:2, location:'М-2, км 11 (мост Айнтап)', road:'М-2 (Ереван–Мегри)', vehicles:'Skoda', cause:'Опрокидывание; 2 погибших' },
-  { year:2024, date:'10.05.2024 18:35', lat:40.09892529712764, lng:44.45918989920442, deaths:2, location:'М-2, км 7 (Айнтап)', road:'М-2 (Ереван–Мегри)', vehicles:'Opel + КамАЗ', cause:'2 погибших' },
-  { year:2024, date:'11.07.2025 11:04', lat:39.681118, lng:45.767248, deaths:2, location:'М-2, ~34 км от Сисиана', road:'М-2 (Сисиан–Ереван)', vehicles:'Mitsubishi', cause:'Упал в ущелье ГЛУБИНОЙ 300м' },
-  { year:2025, date:'21.10.2025 14:14', lat:40.10452852510378, lng:44.464798953418, deaths:1, location:'М-2, км 10 (Ерасх–Ереван)', road:'М-2 (Ереван–Мегри)', vehicles:'Легковой а/м + Mercedes (груз.)', cause:'В припаркованный грузовик' },
+  // ── M-2 YEREVAN–MEGHRI ──────────────────────────────────────────────
+  { year:2023, date:'20.01.2023 13:30', lat:39.90777676234006, lng:44.60614282100605, deaths:1, location:'M-2, km 37 (Pokr Vedi)', road:'M-2 (Yerevan–Meghri)', vehicles:'Mercedes-Benz', cause:'Driver M.S. killed' },
+  { year:2023, date:'23.03.2023 17:08', lat:38.926954869434816, lng:46.21983006222164, deaths:1, location:'M-2, km 4 (from Meghri)', road:'M-2 (Meghri–Yerevan)', vehicles:'Mitsubishi Pajero iO', cause:'Fell into gorge; driver K.M. killed' },
+  { year:2023, date:'07.06.2023 11:10', lat:39.82059474090967, lng:44.73311207388715, deaths:1, location:'M-2, km 53 (Zodii bridge)', road:'M-2 (Yerevan–Meghri)', vehicles:'VAZ + BMW', cause:'Collision; passenger G.D. killed' },
+  { year:2023, date:'22.07.2023 01:08', lat:40.08920942116131, lng:44.45346817411554, deaths:1, location:'M-2, km 12 (Masis)', road:'M-2 (Yerevan–Meghri)', vehicles:'Nissan Skyline + Mercedes (truck)', cause:'Night collision with parked truck' },
+  { year:2023, date:'27.07.2023', lat:40.04469292306809, lng:44.46203351668837, deaths:1, location:'M-2, km 17 (Ayntap)', road:'M-2 (Yerevan–Meghri)', vehicles:'Ford', cause:'Hit metal guardrail; child b.2018 killed' },
+  { year:2023, date:'11.07.2023 03:34', lat:39.73701655719023, lng:45.298888675031115, deaths:2, location:'M-2, km 116 (Taperakan)', road:'M-2 (Yerevan–Meghri)', vehicles:'Mercedes-Benz + KamAZ', cause:'B.G. and S.B. killed' },
+  { year:2023, date:'23.07.2023', lat:39.92145486493988, lng:44.58441060515334, deaths:1, location:'M-2, km 35 (Taperakan)', road:'M-2 (Yerevan–Meghri)', vehicles:'VAZ-2107', cause:'Rollover; driver R.Kh. killed' },
+  { year:2023, date:'21.05.2023 18:58', lat:39.80488216855541, lng:44.96959836692501, deaths:2, location:'M-2, km 82 (Tigranashen curves)', road:'M-2 (Yerevan–Meghri)', vehicles:'Toyota Corolla + VAZ', cause:'VAZ fell into gorge 200m; 2 killed' },
+  { year:2023, date:'21.03.2023 16:39', lat:39.81974336665441, lng:44.99995665101129, deaths:1, location:'M-2, km 86 (Urtsalanj)', road:'M-2 (Yerevan–Meghri)', vehicles:'MAN truck', cause:'Fell into gorge 30m' },
+  { year:2023, date:'11.08.2023 11:06', lat:39.72893770369409, lng:45.392352655971344, deaths:3, location:'M-2, km 129 (Yeghegnadzor–Malishka)', road:'M-2 (Yerevan–Meghri)', vehicles:'Renault (truck) + Mitsubishi', cause:'Collision; 3 killed' },
+  { year:2023, date:'19.08.2023 11:25', lat:39.697654595582776, lng:45.44565745417597, deaths:1, location:'M-2, km 149 (near Vayk)', road:'M-2 (Yerevan–Meghri)', vehicles:'Toyota', cause:'Rollover; passenger I.R. killed' },
+  { year:2023, date:'20.08.2023', lat:39.81531181992831, lng:45.03875107884371, deaths:1, location:'M-2, km 94 (Zangakatun)', road:'M-2 (Yerevan–Meghri)', vehicles:'Nissan Tiida + BMW X5', cause:'Collision; passenger A.Kh. killed' },
+  { year:2023, date:'28.09.2023 18:22', lat:39.738015864598644, lng:45.267713199191135, deaths:1, location:'M-2, km 114 (Areni)', road:'M-2 (Yerevan–Meghri)', vehicles:'VAZ + Mercedes-Benz', cause:'Driver S.B. killed' },
+  { year:2023, date:'29.09.2023 17:37', lat:39.04404634657988, lng:46.2022256460835, deaths:1, location:'M-2, km 242 (Kajaran–Meghri)', road:'M-2 (Yerevan–Meghri)', vehicles:'FAW (truck)', cause:'Rollover; passenger killed' },
+  { year:2023, date:'18.10.2023 10:37', lat:39.734832626613986, lng:45.2394252144071, deaths:1, location:'M-2, km 113 (Agavnadzor)', road:'M-2 (Yerevan–Meghri)', vehicles:'VW Golf + Mercedes-Benz', cause:'Driver A.G. killed' },
+  { year:2023, date:'01.12.2023 11:27', lat:40.01759083352525, lng:44.46691723090211, deaths:1, location:'M-2, km 20 (Mkhchyan)', road:'M-2 (Erasikh–Yerevan)', vehicles:'Kia + Hyundai', cause:'Driver R.P. killed' },
+  { year:2023, date:'18.12.2023 18:54', lat:39.695959488054164, lng:45.458732941724286, deaths:1, location:'M-2, km 150 (Vayk)', road:'M-2 (Yerevan–Meghri)', vehicles:'Mercedes-Benz + Iveco', cause:'Driver G.S. killed' },
+  { year:2023, date:'22.12.2023 11:46', lat:39.7490466425325, lng:44.862806630892905, deaths:1, location:'M-2, km 3 (Erasikh–Paron Sevak)', road:'M-2 branch', vehicles:'VAZ + Iveco', cause:'Driver G.D. killed' },
+  { year:2023, date:'17.09.2023 21:16', lat:40.097538185161206, lng:44.45844348490821, deaths:2, location:'M-2, km 11 (Ayntap bridge)', road:'M-2 (Yerevan–Meghri)', vehicles:'Skoda', cause:'Rollover; 2 killed' },
+  { year:2024, date:'10.05.2024 18:35', lat:40.09892529712764, lng:44.45918989920442, deaths:2, location:'M-2, km 7 (Ayntap)', road:'M-2 (Yerevan–Meghri)', vehicles:'Opel + KamAZ', cause:'2 killed' },
+  { year:2024, date:'11.07.2025 11:04', lat:39.681118, lng:45.767248, deaths:2, location:'M-2, ~km 34 from Sisian', road:'M-2 (Sisian–Yerevan)', vehicles:'Mitsubishi', cause:'Fell into gorge 300m deep' },
+  { year:2025, date:'21.10.2025 14:14', lat:40.10452852510378, lng:44.464798953418, deaths:1, location:'M-2, km 10 (Erasikh–Yerevan)', road:'M-2 (Yerevan–Meghri)', vehicles:'Passenger car + Mercedes (truck)', cause:'Hit parked truck' },
 
-  // ── М-1 ЕРЕВАН–ГЮМРИ ────────────────────────────────────────────────
-  { year:2023, date:'03.06.2023 05:16', lat:40.40463757232676, lng:43.86448579039616, deaths:1, location:'М-1, км 69 (Талин)', road:'М-1 (Ереван–Гюмри)', vehicles:'Kia', cause:'Опрокидывание; пассажир В.С.' },
-  { year:2023, date:'24.04.2023 15:32', lat:40.3775903939677, lng:43.91377038029468, deaths:2, location:'М-1, км 63 (Неркир Базмаберд)', road:'М-1 (Ереван–Гюмри)', vehicles:'Nissan Latio + ВАЗ-21015', cause:'2 погибших' },
-  { year:2023, date:'03.06.2023 12:39', lat:40.56388778232593, lng:43.88526960151733, deaths:1, location:'М-1, км 92 (Сарнагбюр)', road:'М-1 (Ереван–Гюмри)', vehicles:'Мотоцикл + Mercedes-Benz', cause:'Мотоциклист А.М. скончался в больнице' },
-  { year:2023, date:'03.10.2023 17:57', lat:40.47040277067254, lng:43.86621918251447, deaths:3, location:'М-1, км 20 (у Маралика)', road:'М-1 (Гюмри–Ереван)', vehicles:'Mitsubishi + Nissan', cause:'3 погибших при столкновении' },
-  { year:2023, date:'08.11.2023 15:05', lat:40.556194717612385, lng:43.88511691750193, deaths:2, location:'М-1, км 85 (Армавир–Гюмри)', road:'М-1 (Ереван–Гюмри)', vehicles:'ЗИЛ + ВАЗ', cause:'С.М. и В.Ш. погибли' },
-  { year:2024, date:'02.01.2024 08:09', lat:40.272394606265344, lng:44.40904973765692, deaths:2, location:'М-1, км 6 (Аштарак–Ереван)', road:'М-1 (Ереван–Гюмри)', vehicles:'Mercedes-Benz + ВАЗ', cause:'А.Г. и М.Ш. (пассажиры) погибли' },
-  { year:2024, date:'21.02.2024 12:42', lat:40.397851, lng:43.895694, deaths:1, location:'М-1, км 71 (Талин)', road:'М-1 (Ереван–Гюмри)', vehicles:'Opel + Howo (груз.)', cause:'Opel в припаркованный Howo' },
-  { year:2024, date:'18.05.2024 04:28', lat:40.384348570225576, lng:43.90138568888928, deaths:1, location:'М-1, км 64 (Талин)', road:'М-1 (Ереван–Гюмри)', vehicles:'Mercedes-Benz', cause:'Съехал с трассы (пассажир)' },
-  { year:2024, date:'01.06.2024 06:18', lat:40.30255650728003, lng:44.085688687528155, deaths:1, location:'М-1, км 28 (Аруч)', road:'М-1 (Аштарак–Талин)', vehicles:'Volvo (груз.)', cause:'Опрокидывание; водитель Д.Т.' },
-  { year:2024, date:'27.07.2024 21:40', lat:40.53632024967346, lng:43.874329552896555, deaths:2, location:'М-1, км 96 (Гюмри–Ереван)', road:'М-1 (Ереван–Гюмри)', vehicles:'Mercedes-Benz + Hyundai', cause:'Т.Г. и Г.Г. скончались в больнице' },
-  { year:2026, date:'06.01.2026', lat:40.51829315075799, lng:43.87404623883382, deaths:1, location:'М-1, км 91 (Ланжик–Мастара)', road:'М-1 (Ереван–Гюмри)', vehicles:'Volvo (груз.)', cause:'Опрокидывание' },
+  // ── M-1 YEREVAN–GYUMRI ──────────────────────────────────────────────
+  { year:2023, date:'03.06.2023 05:16', lat:40.40463757232676, lng:43.86448579039616, deaths:1, location:'M-1, km 69 (Talin)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Kia', cause:'Rollover; passenger V.S. killed' },
+  { year:2023, date:'24.04.2023 15:32', lat:40.3775903939677, lng:43.91377038029468, deaths:2, location:'M-1, km 63 (Nerkir Bazmaberd)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Nissan Latio + VAZ-21015', cause:'2 killed' },
+  { year:2023, date:'03.06.2023 12:39', lat:40.56388778232593, lng:43.88526960151733, deaths:1, location:'M-1, km 92 (Sarnagbyur)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Motorcycle + Mercedes-Benz', cause:'Motorcyclist A.M. died in hospital' },
+  { year:2023, date:'03.10.2023 17:57', lat:40.47040277067254, lng:43.86621918251447, deaths:3, location:'M-1, km 20 (near Maralik)', road:'M-1 (Gyumri–Yerevan)', vehicles:'Mitsubishi + Nissan', cause:'Collision; 3 killed' },
+  { year:2023, date:'08.11.2023 15:05', lat:40.556194717612385, lng:43.88511691750193, deaths:2, location:'M-1, km 85 (Armavir–Gyumri)', road:'M-1 (Yerevan–Gyumri)', vehicles:'ZIL + VAZ', cause:'S.M. and V.Sh. killed' },
+  { year:2024, date:'02.01.2024 08:09', lat:40.272394606265344, lng:44.40904973765692, deaths:2, location:'M-1, km 6 (Ashtarak–Yerevan)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Mercedes-Benz + VAZ', cause:'Passengers A.G. and M.Sh. killed' },
+  { year:2024, date:'21.02.2024 12:42', lat:40.397851, lng:43.895694, deaths:1, location:'M-1, km 71 (Talin)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Opel + Howo (truck)', cause:'Opel hit parked Howo truck' },
+  { year:2024, date:'18.05.2024 04:28', lat:40.384348570225576, lng:43.90138568888928, deaths:1, location:'M-1, km 64 (Talin)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Mercedes-Benz', cause:'Left road; passenger killed' },
+  { year:2024, date:'01.06.2024 06:18', lat:40.30255650728003, lng:44.085688687528155, deaths:1, location:'M-1, km 28 (Aruch)', road:'M-1 (Ashtarak–Talin)', vehicles:'Volvo (truck)', cause:'Rollover; driver D.T. killed' },
+  { year:2024, date:'27.07.2024 21:40', lat:40.53632024967346, lng:43.874329552896555, deaths:2, location:'M-1, km 96 (Gyumri–Yerevan)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Mercedes-Benz + Hyundai', cause:'T.G. and G.G. died in hospital' },
+  { year:2026, date:'06.01.2026', lat:40.51829315075799, lng:43.87404623883382, deaths:1, location:'M-1, km 91 (Lanjik–Mastara)', road:'M-1 (Yerevan–Gyumri)', vehicles:'Volvo (truck)', cause:'Rollover' },
 
-  // ── М-3/М-7 СПИТАК–ГЮМРИ ───────────────────────────────────────────
-  { year:2023, date:'18.08.2023 20:01', lat:40.855205309686454, lng:44.18360685376309, deaths:1, location:'М-3/М-7, км 10 (Широкамут)', road:'М-3/М-7 (Спитак–Гюмри)', vehicles:'Opel Astra', cause:'В ограждение, опрокинулся' },
-  { year:2024, date:'24.07.2024 13:31', lat:40.843056, lng:44.276861, deaths:1, location:'М-3/М-7, км 2', road:'М-3/М-7 (Спитак–Гюмри)', vehicles:'Toyota', cause:'Опрокидывание (пассажир)' },
-  { year:2024, date:'18.08.2024 13:31', lat:40.84584390353115, lng:44.2534569783535, deaths:1, location:'М-3/М-7, км 4', road:'М-3/М-7 (Спитак–Гюмри)', vehicles:'ВАЗ + Mitsubishi + др. (4 авто)', cause:'Завал 4 авто; водитель погиб' },
-  { year:2025, date:'21.06.2025 16:10', lat:40.854363574008275, lng:44.179695940688894, deaths:1, location:'М-3/М-7, км 10', road:'М-3/М-7 (Спитак–Гюмри)', vehicles:'Volkswagen', cause:'Упал в ущелье' },
+  // ── M-3/M-7 SPITAK–GYUMRI ───────────────────────────────────────────
+  { year:2023, date:'18.08.2023 20:01', lat:40.855205309686454, lng:44.18360685376309, deaths:1, location:'M-3/M-7, km 10 (Shirokamut)', road:'M-3/M-7 (Spitak–Gyumri)', vehicles:'Opel Astra', cause:'Hit guardrail, rolled over' },
+  { year:2024, date:'24.07.2024 13:31', lat:40.843056, lng:44.276861, deaths:1, location:'M-3/M-7, km 2', road:'M-3/M-7 (Spitak–Gyumri)', vehicles:'Toyota', cause:'Rollover; passenger killed' },
+  { year:2024, date:'18.08.2024 13:31', lat:40.84584390353115, lng:44.2534569783535, deaths:1, location:'M-3/M-7, km 4', road:'M-3/M-7 (Spitak–Gyumri)', vehicles:'VAZ + Mitsubishi + others (4 vehicles)', cause:'4-vehicle pile-up; driver killed' },
+  { year:2025, date:'21.06.2025 16:10', lat:40.854363574008275, lng:44.179695940688894, deaths:1, location:'M-3/M-7, km 10', road:'M-3/M-7 (Spitak–Gyumri)', vehicles:'Volkswagen', cause:'Fell into gorge' },
 
-  // ── РЕГИОНАЛЬНЫЕ ДОРОГИ ──────────────────────────────────────────────
-  { year:2023, date:'06.02.2023 18:24', lat:39.949590, lng:44.559019, deaths:1, location:'Артасат, ул. Бакунца / 23 Августа', road:'Артасат (город)', vehicles:'Mercedes-Benz + Honda CR-V', cause:'Водитель Н.К.' },
-  { year:2023, date:'19.02.2023 19:46', lat:39.602933, lng:46.388127, deaths:2, location:'Хнацах', road:'Региональная дорога', vehicles:'УАЗ', cause:'Упал в ущелье; З.Е. и З.А.' },
-  { year:2023, date:'18.03.2023 20:42', lat:40.472905, lng:44.716935, deaths:3, location:'Раздан–Бджни (Солак)', road:'Региональная дорога', vehicles:'Mercedes-Benz', cause:'Упал в ущелье 500м! А.Г., Ш.Г., Г.Г.' },
-  { year:2023, date:'19.03.2023 00:00', lat:40.312515, lng:43.711709, deaths:1, location:'Артени–Арагацаван', road:'Региональная дорога', vehicles:'BMW', cause:'Упал в ущелье; Е.Дж.' },
-  { year:2023, date:'26.03.2023 12:46', lat:40.165012, lng:44.362022, deaths:1, location:'Эчмиадзин–Ереван, км 14', road:'Эчмиадзин–Ереван', vehicles:'Mercedes-Benz', cause:'Врезался в рекламный щит' },
-  { year:2023, date:'07.04.2023 08:59', lat:38.887678, lng:46.265713, deaths:1, location:'Мегри–Агарак, км 3', road:'Мегри–Агарак', vehicles:'ВАЗ-2121 + автобус ПАЗ', cause:'Водитель Г.А.' },
-  { year:2023, date:'11.04.2023 19:48', lat:40.038772, lng:44.406538, deaths:1, location:'Масис–Ранчпар, км 5', road:'Масис–Ранчпар', vehicles:'Mazda 3 + ВАЗ-2104', cause:'Водитель А.Д.' },
-  { year:2023, date:'27.04.2023', lat:40.972603, lng:45.180563, deaths:1, location:'Иджеван–Ноемберян, км 12', road:'Иджеван–Ноемберян', vehicles:'Opel Astra + Mercedes Sprinter', cause:'Водитель А.Г.' },
-  { year:2023, date:'13.05.2023', lat:40.972603, lng:45.180563, deaths:1, location:'Аштарак–Парпи, км 1', road:'Аштарак–Парпи', vehicles:'Mercedes-Benz + ВАЗ-21011', cause:'Водитель Г.Э.' },
-  { year:2023, date:'27.08.2023 14:03', lat:39.923095, lng:44.646181, deaths:3, location:'Веди–Нор Угхи, км 9', road:'Веди–Нор Угхи', vehicles:'Mercedes-Benz', cause:'Упал в ирригационный канал; водитель 15 лет. 3 погибших' },
-  { year:2023, date:'29.09.2023 07:35', lat:40.275949, lng:44.297769, deaths:1, location:'Воскеваз', road:'Региональная дорога', vehicles:'Honda', cause:'Опрокидывание; водитель Н.А.' },
-  { year:2023, date:'29.09.2023 07:51', lat:40.302148, lng:44.421995, deaths:1, location:'Аштарак–Нор Гехи, км 7', road:'Аштарак–Нор Гехи', vehicles:'Nissan + Hovo (груз.)', cause:'Упал в ущелье; водитель В.М.' },
-  { year:2023, date:'04.11.2023 06:00', lat:40.621972, lng:45.020845, deaths:2, location:'Драхтик–Цовагюх, км 22', road:'Драхтик–Цовагюх', vehicles:'Ford + Honda', cause:'Лобовое столкновение; 2 погибших, 3 ранены' },
-  { year:2023, date:'30.10.2023 08:35', lat:40.299774, lng:44.313381, deaths:1, location:'Аштарак–Агарак, км 5', road:'Аштарак–Агарак', vehicles:'BMW + Mercedes + Scania', cause:'Водитель Г.А.' },
-  { year:2023, date:'21.12.2023 07:36', lat:40.299774, lng:44.313381, deaths:1, location:'Алаверди–Багратaшен, км 4', road:'Алаверди–Багратaшен', vehicles:'МАН (газовоз)', cause:'Опрокидывание; водитель А.К.' },
-  { year:2024, date:'19.03.2024 12:28', lat:39.543476, lng:46.100688, deaths:3, location:'Сисиан–Горис, км 11', road:'Сисиан–Горис', vehicles:'Столкновение', cause:'3 погибших' },
-  { year:2024, date:'11.02.2024 11:31', lat:39.857870, lng:44.687638, deaths:1, location:'Веди–Айгаван, км 12', road:'Веди–Айгаван', vehicles:'ВАЗ + BMW', cause:'Т.Ш. погиб' },
-  { year:2025, date:'28.12.2025 18:42', lat:40.742507, lng:43.830496, deaths:3, location:'Гюмри–Азатан', road:'Гюмри–Азатан', vehicles:'Детали не уточнены', cause:'Лобовое столкновение; 3 погибших' },
-  { year:2025, date:'11.07.2025 11:04', lat:39.681118, lng:45.767248, deaths:2, location:'М-2, ~34 км от Сисиана', road:'М-2 (Сисиан–Ереван)', vehicles:'Mitsubishi', cause:'Упал в ущелье 300м' },
-  { year:2025, date:'18.11.2025 20:37', lat:40.142458, lng:44.121173, deaths:1, location:'Метсамор', road:'Метсамор (город)', vehicles:'Детали не уточнены', cause:'Смертельное ДТП' },
-  { year:2025, date:'29.12.2025 03:04', lat:40.756771, lng:44.644241, deaths:1, location:'Ванадзор–Дилижан', road:'Ванадзор–Дилижан', vehicles:'Столкновение', cause:'1 погибший, 2 ранены' },
-  { year:2026, date:'22.01.2026 03:12', lat:39.760680, lng:45.166741, deaths:1, location:'Ринд', road:'Вайоцдзор', vehicles:'Кран', cause:'Опрокидывание крана' },
-  { year:2026, date:'10.02.2026 16:54', lat:40.688562, lng:44.283332, deaths:1, location:'Алагяз–Джамшлу', road:'Алагяз–Джамшлу', vehicles:'Столкновение', cause:'Смертельное ДТП' },
-  { year:2026, date:'22.02.2026 10:05', lat:40.249322, lng:44.340404, deaths:1, location:'Сасуник', road:'Арагацотн', vehicles:'Столкновение', cause:'Смертельное ДТП' },
+  // ── REGIONAL ROADS ───────────────────────────────────────────────────
+  { year:2023, date:'06.02.2023 18:24', lat:39.949590, lng:44.559019, deaths:1, location:'Artashat, Bakunts / Aug.23 St.', road:'Artashat (city)', vehicles:'Mercedes-Benz + Honda CR-V', cause:'Driver N.K. killed' },
+  { year:2023, date:'19.02.2023 19:46', lat:39.602933, lng:46.388127, deaths:2, location:'Khnatsakh', road:'Regional road', vehicles:'UAZ', cause:'Fell into gorge; Z.Ye. and Z.A. killed' },
+  { year:2023, date:'18.03.2023 20:42', lat:40.472905, lng:44.716935, deaths:3, location:'Razdan–Bjni (Solak)', road:'Regional road', vehicles:'Mercedes-Benz', cause:'Fell into gorge 500m; A.G., Sh.G., G.G. killed' },
+  { year:2023, date:'19.03.2023 00:00', lat:40.312515, lng:43.711709, deaths:1, location:'Arteni–Aragatsavan', road:'Regional road', vehicles:'BMW', cause:'Fell into gorge; Ye.Dzh. killed' },
+  { year:2023, date:'26.03.2023 12:46', lat:40.165012, lng:44.362022, deaths:1, location:'Echmiadzin–Yerevan, km 14', road:'Echmiadzin–Yerevan', vehicles:'Mercedes-Benz', cause:'Hit billboard' },
+  { year:2023, date:'07.04.2023 08:59', lat:38.887678, lng:46.265713, deaths:1, location:'Meghri–Agarak, km 3', road:'Meghri–Agarak', vehicles:'VAZ-2121 + PAZ bus', cause:'Driver G.A. killed' },
+  { year:2023, date:'11.04.2023 19:48', lat:40.038772, lng:44.406538, deaths:1, location:'Masis–Ranchpar, km 5', road:'Masis–Ranchpar', vehicles:'Mazda 3 + VAZ-2104', cause:'Driver A.D. killed' },
+  { year:2023, date:'27.04.2023', lat:40.972603, lng:45.180563, deaths:1, location:'Ijevan–Noyemberyan, km 12', road:'Ijevan–Noyemberyan', vehicles:'Opel Astra + Mercedes Sprinter', cause:'Driver A.G. killed' },
+  { year:2023, date:'13.05.2023', lat:40.972603, lng:45.180563, deaths:1, location:'Ashtarak–Parpi, km 1', road:'Ashtarak–Parpi', vehicles:'Mercedes-Benz + VAZ-21011', cause:'Driver G.E. killed' },
+  { year:2023, date:'27.08.2023 14:03', lat:39.923095, lng:44.646181, deaths:3, location:'Vedi–Nor Ughi, km 9', road:'Vedi–Nor Ughi', vehicles:'Mercedes-Benz', cause:'Fell into irrigation canal; 15-year-old driver; 3 killed' },
+  { year:2023, date:'29.09.2023 07:35', lat:40.275949, lng:44.297769, deaths:1, location:'Voskevaz', road:'Regional road', vehicles:'Honda', cause:'Rollover; driver N.A. killed' },
+  { year:2023, date:'29.09.2023 07:51', lat:40.302148, lng:44.421995, deaths:1, location:'Ashtarak–Nor Geghi, km 7', road:'Ashtarak–Nor Geghi', vehicles:'Nissan + Howo (truck)', cause:'Fell into gorge; driver V.M. killed' },
+  { year:2023, date:'04.11.2023 06:00', lat:40.621972, lng:45.020845, deaths:2, location:'Drakhtig–Tsovagyugh, km 22', road:'Drakhtig–Tsovagyugh', vehicles:'Ford + Honda', cause:'Head-on collision; 2 killed, 3 injured' },
+  { year:2023, date:'30.10.2023 08:35', lat:40.299774, lng:44.313381, deaths:1, location:'Ashtarak–Agarak, km 5', road:'Ashtarak–Agarak', vehicles:'BMW + Mercedes + Scania', cause:'Driver G.A. killed' },
+  { year:2023, date:'21.12.2023 07:36', lat:40.299774, lng:44.313381, deaths:1, location:'Alaverdi–Bagratashen, km 4', road:'Alaverdi–Bagratashen', vehicles:'MAN (gas tanker)', cause:'Rollover; driver A.K. killed' },
+  { year:2024, date:'19.03.2024 12:28', lat:39.543476, lng:46.100688, deaths:3, location:'Sisian–Goris, km 11', road:'Sisian–Goris', vehicles:'Collision', cause:'3 killed' },
+  { year:2024, date:'11.02.2024 11:31', lat:39.857870, lng:44.687638, deaths:1, location:'Vedi–Aygavan, km 12', road:'Vedi–Aygavan', vehicles:'VAZ + BMW', cause:'T.Sh. killed' },
+  { year:2025, date:'28.12.2025 18:42', lat:40.742507, lng:43.830496, deaths:3, location:'Gyumri–Azatan', road:'Gyumri–Azatan', vehicles:'Details unknown', cause:'Head-on collision; 3 killed' },
+  { year:2025, date:'11.07.2025 11:04', lat:39.681118, lng:45.767248, deaths:2, location:'M-2, ~km 34 from Sisian', road:'M-2 (Sisian–Yerevan)', vehicles:'Mitsubishi', cause:'Fell into gorge 300m deep' },
+  { year:2025, date:'18.11.2025 20:37', lat:40.142458, lng:44.121173, deaths:1, location:'Metsamor', road:'Metsamor (city)', vehicles:'Details unknown', cause:'Fatal crash' },
+  { year:2025, date:'29.12.2025 03:04', lat:40.756771, lng:44.644241, deaths:1, location:'Vanadzor–Dilijan', road:'Vanadzor–Dilijan', vehicles:'Collision', cause:'1 killed, 2 injured' },
+  { year:2026, date:'22.01.2026 03:12', lat:39.760680, lng:45.166741, deaths:1, location:'Rind', road:'Vayots Dzor', vehicles:'Crane', cause:'Crane rollover' },
+  { year:2026, date:'10.02.2026 16:54', lat:40.688562, lng:44.283332, deaths:1, location:'Alagyz–Jamshlu', road:'Alagyz–Jamshlu', vehicles:'Collision', cause:'Fatal crash' },
+  { year:2026, date:'22.02.2026 10:05', lat:40.249322, lng:44.340404, deaths:1, location:'Sasunik', road:'Aragatsotn', vehicles:'Collision', cause:'Fatal crash' },
 ];
 
-// ── Отрисовка маркеров ───────────────────────────────────────────────
+// ── Render markers ────────────────────────────────────────────────────
 const markers = [];
 incidents.forEach(d => {
   const m = L.marker([d.lat, d.lng], { icon: icon(d.deaths, d.year) });
@@ -214,7 +214,7 @@ incidents.forEach(d => {
   markers.push(m);
 });
 
-// ── Счётчик ──────────────────────────────────────────────────────────
+// ── Counter ───────────────────────────────────────────────────────────
 function updateCounter() {
   const shown = markers.filter(m => map.hasLayer(m));
   document.getElementById('shown').textContent = shown.length;
@@ -226,7 +226,7 @@ function updateCounter() {
 }
 updateCounter();
 
-// ── Фильтры ──────────────────────────────────────────────────────────
+// ── Filters ───────────────────────────────────────────────────────────
 function applyFilters() {
   const activeYears = new Set([...document.querySelectorAll('.yr:checked')].map(c => +c.value));
   const activeDths  = new Set([...document.querySelectorAll('.dth:checked')].map(c => +c.value));
