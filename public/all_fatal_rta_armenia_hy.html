@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<title>Բոլոր մահացու ՃՏՊ-ները Հայաստանում 2023–2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; }
+  #map { width: 100%; height: 100vh; }
+  #panel {
+    position: absolute; top: 10px; left: 10px; z-index: 1000;
+    background: rgba(255,255,255,0.96); border: 1px solid #ccc;
+    border-radius: 10px; padding: 13px 15px; max-width: 260px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  #panel h2 { font-size: 13px; color: #c0392b; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  #panel .sub { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .legend-row { display: flex; align-items: center; gap: 7px; margin: 4px 0; font-size: 12px; color: #333; }
+  .dot { border-radius: 50%; flex-shrink: 0; border: 1.5px solid rgba(0,0,0,0.2); }
+  .sep { border-top: 1px solid #eee; margin: 8px 0; }
+  #filters {
+    position: absolute; top: 10px; right: 10px; z-index: 1000;
+    background: rgba(255,255,255,0.96); border: 1px solid #ccc;
+    border-radius: 9px; padding: 11px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    min-width: 150px;
+  }
+  #filters h3 { font-size: 11px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+  #filters label { font-size: 12px; display: flex; align-items: center; gap: 6px; margin: 5px 0; cursor: pointer; color: #333; }
+  #counter {
+    position: absolute; bottom: 10px; left: 10px; z-index: 1000;
+    background: rgba(255,255,255,0.96); border: 1px solid #ccc;
+    border-radius: 8px; padding: 8px 13px; font-size: 11px; color: #555;
+  }
+  #counter b { color: #c0392b; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div id="panel">
+  <h2>Մահացու ՃՏՊ-ներ</h2>
+  <div class="sub">Հայաստան · 2023–2026 · ՆԳ / Փրկարարական ծառայություն</div>
+  <div class="legend-row"><div class="dot" style="width:10px;height:10px;background:#e67e22;"></div><span>1 զոհ</span></div>
+  <div class="legend-row"><div class="dot" style="width:14px;height:14px;background:#e74c3c;"></div><span>2 զոհ</span></div>
+  <div class="legend-row"><div class="dot" style="width:18px;height:18px;background:#8e1515;"></div><span>3+ զոհ</span></div>
+  <div class="sep"></div>
+  <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#3498db;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2023</span></div>
+  <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#27ae60;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2024</span></div>
+  <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#e74c3c;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2025</span></div>
+  <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:#9b59b6;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;"></div><span>2026</span></div>
+  <div class="sep"></div>
+  <div style="font-size:11px;color:#999;">Մանրամասների համար սեղմեք նշիչի վրա</div>
+  <div class="sep"></div>
+  <div style="font-size:11px;color:#888;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;">
+    <span>
+      <a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank" style="color:#3498db;text-decoration:none;" title="Creative Commons Attribution 4.0">CC BY 4.0</a>
+      &nbsp;·&nbsp;
+      <a href="about.html" style="color:#3498db;text-decoration:none;">Նախագծի մասին</a>
+    </span>
+    <span>
+      <a href="index.html" style="color:#3498db;text-decoration:none;font-weight:600;">EN</a>
+      &nbsp;·&nbsp;
+      <a href="all_fatal_rta_armenia_ru.html" style="color:#3498db;text-decoration:none;font-weight:600;">RU</a>
+      &nbsp;·&nbsp;
+      <b style="color:#555;">ՀԱՅ</b>
+    </span>
+  </div>
+</div>
+
+<div id="filters">
+  <h3>Տարի</h3>
+  <label><input type="checkbox" class="yr" value="2023" checked><span style="color:#3498db;">● 2023</span></label>
+  <label><input type="checkbox" class="yr" value="2024" checked><span style="color:#27ae60;">● 2024</span></label>
+  <label><input type="checkbox" class="yr" value="2025" checked><span style="color:#e74c3c;">● 2025</span></label>
+  <label><input type="checkbox" class="yr" value="2026" checked><span style="color:#9b59b6;">● 2026</span></label>
+  <div style="border-top:1px solid #eee;margin:8px 0;"></div>
+  <h3>Զոհեր</h3>
+  <label><input type="checkbox" class="dth" value="1" checked><span>1 զոհ</span></label>
+  <label><input type="checkbox" class="dth" value="2" checked><span>2 զոհ</span></label>
+  <label><input type="checkbox" class="dth" value="3" checked><span>3+ զոհ</span></label>
+</div>
+
+<div id="counter">
+  Ցուցադրվում է՝ <b id="shown">0</b> / <b id="total">0</b> դեպք · <b id="deaths_shown">0</b> զոհ
+</div>
+
+<script>
+const map = L.map('map', { center: [40.1, 44.9], zoom: 8 });
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+}).addTo(map);
+
+const yearColor = { 2023: '#3498db', 2024: '#27ae60', 2025: '#e74c3c', 2026: '#9b59b6' };
+
+function icon(deaths, year) {
+  const s = deaths === 1 ? 12 : deaths === 2 ? 16 : 20;
+  const c = yearColor[year];
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:${s}px;height:${s}px;border-radius:50%;background:${c};border:2px solid rgba(0,0,0,0.25);box-shadow:0 1px 5px rgba(0,0,0,0.3);"></div>`,
+    iconAnchor: [s/2, s/2], popupAnchor: [0, -(s/2+3)]
+  });
+}
+
+function popup(d) {
+  const dk = d.deaths === 1 ? '1 զոհ' : `<b style="color:#c0392b">${d.deaths} զոհ</b>`;
+  return `<div style="font-family:'Segoe UI',sans-serif;min-width:210px;max-width:280px;">
+    <div style="font-weight:bold;font-size:13px;margin-bottom:3px;">${d.location}</div>
+    <div style="font-size:11px;color:#888;margin-bottom:6px;">${d.road}</div>
+    <div style="background:#f5f5f5;border-radius:4px;padding:4px 8px;margin-bottom:5px;font-size:12px;">
+      🕐 <b>${d.date}</b> &nbsp;·&nbsp; 💀 ${dk}
+    </div>
+    <div style="font-size:11px;color:#555;">🚗 ${d.vehicles}</div>
+    ${d.cause ? `<div style="font-size:11px;color:#444;margin-top:3px;">${d.cause}</div>` : ''}
+  </div>`;
+}
+
+const incidents = [
+  // ── ԵՐԵՎԱՆ ──────────────────────────────────────────────────────────
+  { year:2023, date:'25.01.2023 22:03', lat:40.161093, lng:44.484969, deaths:1, location:'Արագածի փ., 6', road:'Երևան, Շենգավիթ', vehicles:'Մարդատար մեքենա', cause:'Բախվել է պատին; վարորդը արգելափակվել է սրահում' },
+  { year:2023, date:'20.07.2023 00:34', lat:40.172757, lng:44.512463, deaths:1, location:'Ագաթանգեղոսի / Խորենացի', road:'Երևան, Կենտրոն', vehicles:'Մարդատար մեքենա', cause:'Բախում; վարորդը արգելափակվել է սրահում' },
+  { year:2023, date:'26.11.2023 09:28', lat:40.205609, lng:44.505783, deaths:2, location:'Կոմիտասի պ. (Ռաֆֆու դ.)', road:'Երևան, Արաբկիր', vehicles:'Audi + ВАЗ', cause:'Բախում; 1 տեղում, 1 հիվանդանոցում (Կ.Հ. 1957թ.)' },
+  { year:2023, date:'31.12.2023 21:40', lat:40.125122, lng:44.494360, deaths:1, location:'Արտաշատի մայրուղի, 5', road:'Երևան, Շենգավիթ', vehicles:'ВАЗ + Toyota', cause:'Ճակատային բախում; վարորդ Վ.Շ. 1981թ.' },
+  { year:2024, date:'12.01.2024 12:35', lat:40.209077, lng:44.522238, deaths:1, location:'Մամիկոնյանց փ.', road:'Երևան, Արաբկիր', vehicles:'Մանրամասները անհայտ', cause:'Մահացու ՃՏՊ' },
+  { year:2024, date:'06.03.2024 02:20', lat:40.218478, lng:44.464077, deaths:1, location:'Աշտարակի մ/ճ → Ալաբյան փ.', road:'Երևան, Աճապնյակ', vehicles:'Mercedes-Benz', cause:'Կորցրել է կառավարումը, շրջվել; վարորդ Վ.Կ. 2000թ.' },
+  { year:2024, date:'12.08.2024 21:55', lat:40.195663, lng:44.537858, deaths:1, location:'Մյասնիկյան պ., 27', road:'Երևան, Ավան', vehicles:'Honda մոտոցիկլ', cause:'Մոտոցիկլավարը բախվել է բետոնե արգելապատնեշին; Ա.Խ. 1993թ.' },
+  { year:2024, date:'17.10.2024 17:31', lat:40.204839, lng:44.461360, deaths:1, location:'G1 թաղամաս, Սասունցի Դավիթ փ.', road:'Երևան, Աճապնյակ', vehicles:'Toyota + Mercedes-Benz', cause:'Toyota-ն բախումից հետո բախվել է պատին; վարորդ Վ.Ս. 1966թ.' },
+  { year:2025, date:'12.09.2025 10:17', lat:40.117894, lng:44.482734, deaths:1, location:'Արտաշատի մայրուղի, 37/2', road:'Երևան, Շենգավիթ', vehicles:'Mazda', cause:'Բախվել է բաժանիչ արգելապատնեշին, շրջվել; Ս.Գ. 2002թ.' },
+  { year:2025, date:'14.09.2025 08:16', lat:40.141183, lng:44.468778, deaths:1, location:'Արարատյան փ.', road:'Երևան, Շենգավիթ', vehicles:'Opel + կայանված կցորդիչ', cause:'Opel-ը բախվել է կայանված կցորդիչին; վարորդ Ս.Դ. 1993թ.' },
+  { year:2025, date:'23.11.2025 04:54', lat:40.191545, lng:44.482455, deaths:1, location:'Կիևյան կամուրջ', road:'Երևան, Արաբկիր/Աճապնյակ', vehicles:'Մանրամասները անհայտ', cause:'Բախում Հրազդանի կամրջի վրա' },
+  { year:2025, date:'26.12.2025 14:59', lat:40.216829, lng:44.468055, deaths:1, location:'Աշտարակի մայրուղի', road:'Երևան, Աճապնյակ', vehicles:'Մանրամասները անհայտ', cause:'Ծանր բախում' },
+
+  // ── Մ-4 ԵՐԵՎԱՆ–ՍԵՎԱՆ–ԻՋԵՎԱՆ ────────────────────────────────────────
+  { year:2023, date:'07.06.2023 12:48', lat:40.39768436218149, lng:44.66993912421997, deaths:1, location:'Մ-4, կմ 30', road:'Մ-4 (Երևան–Սևան), Չարենցավան', vehicles:'BMW', cause:'Ընկել է կիրճ 50մ' },
+  { year:2023, date:'23.06.2023 09:22', lat:40.35928019023859, lng:44.635758554050014, deaths:1, location:'Մ-4, կմ 25 (Ծայնիի կոր.)', road:'Մ-4 (Երևան–Սևան)', vehicles:'Opel', cause:'Ընկել է կիրճ 70մ' },
+  { year:2023, date:'24.07.2023 14:31', lat:40.346493498139104, lng:44.63138381224796, deaths:1, location:'Մ-4, կմ 23 (Ծայնիի կոր.)', road:'Մ-4 (Երևան–Սևան)', vehicles:'Nissan', cause:'Բախվել է արգելապատնեշին; ուղևոր զոհ' },
+  { year:2023, date:'17.07.2023 14:05', lat:40.72233134851129, lng:44.85284844292736, deaths:1, location:'Մ-4, կմ 93', road:'Մ-4 (Իջևան–Երևան)', vehicles:'Opel', cause:'Կողաշրջվել; վարորդ Գ.Ա.' },
+  { year:2023, date:'08.08.2023 21:24', lat:40.4711388485019, lng:44.7443375245887, deaths:1, location:'Մ-4, կմ 41 (Կաղսու կամուրջ)', road:'Մ-4 (Երևան–Սևան)', vehicles:'Opel Vectra + Chrysler', cause:'Բախում; վարորդ զոհ' },
+  { year:2023, date:'26.12.2023 18:08', lat:40.25286395700201, lng:44.588961557149865, deaths:1, location:'Մ-4, ~կմ 22 (Shangri-La)', road:'Մ-4 (Երևան–Սևան)', vehicles:'Toyota + Lada', cause:'Բախում; վարորդ Ա.Գ. զոհ' },
+  { year:2024, date:'15.07.2024 21:34', lat:40.316198374523985, lng:44.62883570405794, deaths:1, location:'Մ-4, կմ 20', road:'Մ-4 (Երևան–Սևան), Աբովյան', vehicles:'Infiniti', cause:'Ընկել է կիրճ 70մ; ուղևոր զոհ' },
+  { year:2024, date:'20.07.2024 16:59', lat:40.316198374523985, lng:44.62883570405794, deaths:1, location:'Մ-4, կմ 20', road:'Մ-4 (Երևան–Սևան), Աբովյան', vehicles:'Mitsubishi + Kia + Honda', cause:'Եռակի բախում; վարորդ զոհ' },
+  { year:2024, date:'30.06.2024 16:46', lat:40.48241529977355, lng:44.762571765017064, deaths:1, location:'Մ-4, կմ 43', road:'Մ-4 (Երևան–Սևան)', vehicles:'Mercedes + Opel + BMW', cause:'Եռակի բախում; ուղևոր Ա.Գ. զոհ' },
+  { year:2024, date:'17.07.2024 01:01', lat:40.53452193752898, lng:44.87402752717715, deaths:1, location:'Մ-4, կմ 54', road:'Մ-4 (Սևան–Երևան)', vehicles:'Mercedes-Benz + ЗИЛ', cause:'Բախում; վարորդ Ռ.Խ. զոհ' },
+  { year:2024, date:'14.08.2024 15:55', lat:40.61770038967384, lng:44.9520788168223, deaths:1, location:'Մ-4, կմ 74 (Ծովագյուղ)', road:'Մ-4 (Երևան–Իջևան)', vehicles:'DAF + Opel', cause:'Բախում; վարորդ Ջ.Գ. զոհ' },
+  { year:2025, date:'09.10.2025 19:05', lat:40.310085756581046, lng:44.62360089122059, deaths:2, location:'Մ-4, կմ 19', road:'Մ-4 (Երևան–Սևան), Աբովյան', vehicles:'Mercedes-Benz + Lexus', cause:'Ճակատային բախում; 2 զոհ' },
+
+  // ── Մ-2 ԵՐԵՎԱՆ–ՄԵՂՐԻ ────────────────────────────────────────────────
+  { year:2023, date:'20.01.2023 13:30', lat:39.90777676234006, lng:44.60614282100605, deaths:1, location:'Մ-2, կմ 37 (Փոքր Վեդի)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Mercedes-Benz', cause:'Վարորդ Մ.Ս. զոհ' },
+  { year:2023, date:'23.03.2023 17:08', lat:38.926954869434816, lng:46.21983006222164, deaths:1, location:'Մ-2, կմ 4 (Մեղրիից)', road:'Մ-2 (Մեղրի–Երևան)', vehicles:'Mitsubishi Pajero iO', cause:'Ընկել է կիրճ; վարորդ Կ.Մ. զոհ' },
+  { year:2023, date:'07.06.2023 11:10', lat:39.82059474090967, lng:44.73311207388715, deaths:1, location:'Մ-2, կմ 53 (Զոդու կամուրջ)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'ВАЗ + BMW', cause:'Բախում; ուղևոր Գ.Դ. զոհ' },
+  { year:2023, date:'22.07.2023 01:08', lat:40.08920942116131, lng:44.45346817411554, deaths:1, location:'Մ-2, կմ 12 (Մասիս)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Nissan Skyline + Mercedes (բեռն.)', cause:'Գիշերային բախում կայանված բեռնատարի հետ' },
+  { year:2023, date:'27.07.2023', lat:40.04469292306809, lng:44.46203351668837, deaths:1, location:'Մ-2, կմ 17 (Այնթափ)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Ford', cause:'Բախվել է մետաղյա արգելապատնեշին; 2018թ. ծնված երեխա զոհ' },
+  { year:2023, date:'11.07.2023 03:34', lat:39.73701655719023, lng:45.298888675031115, deaths:2, location:'Մ-2, կմ 116 (Թափերական)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Mercedes-Benz + КамАЗ', cause:'Բ.Գ. և Ս.Բ. զոհ' },
+  { year:2023, date:'23.07.2023', lat:39.92145486493988, lng:44.58441060515334, deaths:1, location:'Մ-2, կմ 35 (Թափերական)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'ВАЗ-2107', cause:'Կողաշրջվել; վարորդ Ռ.Խ. զոհ' },
+  { year:2023, date:'21.05.2023 18:58', lat:39.80488216855541, lng:44.96959836692501, deaths:2, location:'Մ-2, կմ 82 (Տիգրանաշեն)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Toyota Corolla + ВАЗ', cause:'ВАЗ-ն ընկել է 200մ կիրճ; 2 զոհ' },
+  { year:2023, date:'21.03.2023 16:39', lat:39.81974336665441, lng:44.99995665101129, deaths:1, location:'Մ-2, կմ 86 (Ուրծաlandzh)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'МАН բեռնատար', cause:'Ընկել է 30մ կիրճ' },
+  { year:2023, date:'11.08.2023 11:06', lat:39.72893770369409, lng:45.392352655971344, deaths:3, location:'Մ-2, կմ 129 (Եղեգնաձոր–Մալիշկա)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Renault (բեռն.) + Mitsubishi', cause:'Բախում; 3 զոհ' },
+  { year:2023, date:'19.08.2023 11:25', lat:39.697654595582776, lng:45.44565745417597, deaths:1, location:'Մ-2, կմ 149 (Վայք)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Toyota', cause:'Կողաշրջվել; ուղևոր Ի.Ռ. զոհ' },
+  { year:2023, date:'20.08.2023', lat:39.81531181992831, lng:45.03875107884371, deaths:1, location:'Մ-2, կմ 94 (Զանգակատուն)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Nissan Tiida + BMW X5', cause:'Բախում; ուղևոր Ա.Խ. զոհ' },
+  { year:2023, date:'28.09.2023 18:22', lat:39.738015864598644, lng:45.267713199191135, deaths:1, location:'Մ-2, կմ 114 (Արենի)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'ВАЗ + Mercedes-Benz', cause:'Վարորդ Ս.Բ. զոհ' },
+  { year:2023, date:'29.09.2023 17:37', lat:39.04404634657988, lng:46.2022256460835, deaths:1, location:'Մ-2, կմ 242 (Կաջարան–Մեղրի)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'FAW (բեռն.)', cause:'Կողաշրջվել; ուղևոր զոհ' },
+  { year:2023, date:'18.10.2023 10:37', lat:39.734832626613986, lng:45.2394252144071, deaths:1, location:'Մ-2, կմ 113 (Ագավնաձոր)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'VW Golf + Mercedes-Benz', cause:'Վարորդ Ա.Գ. զոհ' },
+  { year:2023, date:'01.12.2023 11:27', lat:40.01759083352525, lng:44.46691723090211, deaths:1, location:'Մ-2, կմ 20 (Մխչյան)', road:'Մ-2 (Երասխ–Երևան)', vehicles:'Kia + Hyundai', cause:'Վարորդ Ռ.Պ. զոհ' },
+  { year:2023, date:'18.12.2023 18:54', lat:39.695959488054164, lng:45.458732941724286, deaths:1, location:'Մ-2, կմ 150 (Վայք)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Mercedes-Benz + Iveco', cause:'Վարորդ Գ.Ս. զոհ' },
+  { year:2023, date:'22.12.2023 11:46', lat:39.7490466425325, lng:44.862806630892905, deaths:1, location:'Մ-2, կմ 3 (Երասխ–Պարոն Սևակ)', road:'Մ-2 ճյուղ', vehicles:'ВАЗ + Iveco', cause:'Վարորդ Գ.Դ. զոհ' },
+  { year:2023, date:'17.09.2023 21:16', lat:40.097538185161206, lng:44.45844348490821, deaths:2, location:'Մ-2, կմ 11 (Այնթափի կամուրջ)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Skoda', cause:'Կողաշրջվել; 2 զոհ' },
+  { year:2024, date:'10.05.2024 18:35', lat:40.09892529712764, lng:44.45918989920442, deaths:2, location:'Մ-2, կմ 7 (Այնթափ)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Opel + КамАЗ', cause:'2 զոհ' },
+  { year:2024, date:'11.07.2025 11:04', lat:39.681118, lng:45.767248, deaths:2, location:'Մ-2, ~կմ 34 Սիսիանից', road:'Մ-2 (Սիսիան–Երևան)', vehicles:'Mitsubishi', cause:'Ընկել է 300մ խորություն ունեցող կիրճ' },
+  { year:2025, date:'21.10.2025 14:14', lat:40.10452852510378, lng:44.464798953418, deaths:1, location:'Մ-2, կմ 10 (Երասխ–Երևան)', road:'Մ-2 (Երևան–Մեղրի)', vehicles:'Մարդ. մեք. + Mercedes (բեռն.)', cause:'Բախվել է կայանված բեռնատարին' },
+
+  // ── Մ-1 ԵՐԵՎԱՆ–ԳՅՈՒՄՐԻ ──────────────────────────────────────────────
+  { year:2023, date:'03.06.2023 05:16', lat:40.40463757232676, lng:43.86448579039616, deaths:1, location:'Մ-1, կմ 69 (Թալին)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Kia', cause:'Կողաշրջվել; ուղևոր Վ.Ս. զոհ' },
+  { year:2023, date:'24.04.2023 15:32', lat:40.3775903939677, lng:43.91377038029468, deaths:2, location:'Մ-1, կմ 63 (Ներքին Բազմաբերդ)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Nissan Latio + ВАЗ-21015', cause:'2 զոհ' },
+  { year:2023, date:'03.06.2023 12:39', lat:40.56388778232593, lng:43.88526960151733, deaths:1, location:'Մ-1, կմ 92 (Սառնաղբյուր)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Մոտոցիկլ + Mercedes-Benz', cause:'Մոտոցիկլավար Ա.Մ. մահացել է հիվանդանոցում' },
+  { year:2023, date:'03.10.2023 17:57', lat:40.47040277067254, lng:43.86621918251447, deaths:3, location:'Մ-1, կմ 20 (Մառալիկ)', road:'Մ-1 (Գյումրի–Երևան)', vehicles:'Mitsubishi + Nissan', cause:'Բախում; 3 զոհ' },
+  { year:2023, date:'08.11.2023 15:05', lat:40.556194717612385, lng:43.88511691750193, deaths:2, location:'Մ-1, կմ 85 (Արմավիր–Գյումրի)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'ЗИЛ + ВАЗ', cause:'Ս.Մ. և Վ.Շ. զոհ' },
+  { year:2024, date:'02.01.2024 08:09', lat:40.272394606265344, lng:44.40904973765692, deaths:2, location:'Մ-1, կմ 6 (Աշտարակ–Երևան)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Mercedes-Benz + ВАЗ', cause:'Ուղևորներ Ա.Գ. և Մ.Շ. զոհ' },
+  { year:2024, date:'21.02.2024 12:42', lat:40.397851, lng:43.895694, deaths:1, location:'Մ-1, կմ 71 (Թալին)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Opel + Howo (բեռն.)', cause:'Opel-ը բախվել է կայանված Howo-ին' },
+  { year:2024, date:'18.05.2024 04:28', lat:40.384348570225576, lng:43.90138568888928, deaths:1, location:'Մ-1, կմ 64 (Թալին)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Mercedes-Benz', cause:'Դուրս է եկել ճանապարհից; ուղևոր զոհ' },
+  { year:2024, date:'01.06.2024 06:18', lat:40.30255650728003, lng:44.085688687528155, deaths:1, location:'Մ-1, կմ 28 (Առուճ)', road:'Մ-1 (Աշտարակ–Թալին)', vehicles:'Volvo (բեռն.)', cause:'Կողաշրջվել; վարորդ Դ.Տ. զոհ' },
+  { year:2024, date:'27.07.2024 21:40', lat:40.53632024967346, lng:43.874329552896555, deaths:2, location:'Մ-1, կմ 96 (Գյումրի–Երևան)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Mercedes-Benz + Hyundai', cause:'Տ.Գ. և Գ.Գ. մահացել են հիվանդանոցում' },
+  { year:2026, date:'06.01.2026', lat:40.51829315075799, lng:43.87404623883382, deaths:1, location:'Մ-1, կմ 91 (Լանջիկ–Մաստարա)', road:'Մ-1 (Երևան–Գյումրի)', vehicles:'Volvo (բեռն.)', cause:'Կողաշրջվել' },
+
+  // ── Մ-3/Մ-7 ՍՊԻՏԱԿ–ԳՅՈՒՄՐԻ ─────────────────────────────────────────
+  { year:2023, date:'18.08.2023 20:01', lat:40.855205309686454, lng:44.18360685376309, deaths:1, location:'Մ-3/Մ-7, կմ 10 (Շիրոկամուտ)', road:'Մ-3/Մ-7 (Սպիտակ–Գյումրի)', vehicles:'Opel Astra', cause:'Բախվել է արգելապատնեշին, կողաշրջվել' },
+  { year:2024, date:'24.07.2024 13:31', lat:40.843056, lng:44.276861, deaths:1, location:'Մ-3/Մ-7, կմ 2', road:'Մ-3/Մ-7 (Սպիտակ–Գյումրի)', vehicles:'Toyota', cause:'Կողաշրջվել; ուղևոր զոհ' },
+  { year:2024, date:'18.08.2024 13:31', lat:40.84584390353115, lng:44.2534569783535, deaths:1, location:'Մ-3/Մ-7, կմ 4', road:'Մ-3/Մ-7 (Սպիտակ–Գյումրի)', vehicles:'ВАЗ + Mitsubishi + այլ (4 մեք.)', cause:'4 մեքենայի կուտակում; վարորդ զոհ' },
+  { year:2025, date:'21.06.2025 16:10', lat:40.854363574008275, lng:44.179695940688894, deaths:1, location:'Մ-3/Մ-7, կմ 10', road:'Մ-3/Մ-7 (Սպիտակ–Գյումրի)', vehicles:'Volkswagen', cause:'Ընկել է կիրճ' },
+
+  // ── ՏԱՐԱԾԱՇՐՋԱՆԱՅԻՆ ՃԱՆԱՊԱՐՀՆԵՐ ────────────────────────────────────
+  { year:2023, date:'06.02.2023 18:24', lat:39.949590, lng:44.559019, deaths:1, location:'Արտաշատ, Բակունց / Օգոստ. 23', road:'Արտաշատ (քաղաք)', vehicles:'Mercedes-Benz + Honda CR-V', cause:'Վարորդ Ն.Կ. զոհ' },
+  { year:2023, date:'19.02.2023 19:46', lat:39.602933, lng:46.388127, deaths:2, location:'Խնաձոր', road:'Տարածաշրջ. ճ/պ', vehicles:'УАЗ', cause:'Ընկել է կիրճ; Զ.Ե. և Զ.Ա. զոհ' },
+  { year:2023, date:'18.03.2023 20:42', lat:40.472905, lng:44.716935, deaths:3, location:'Հրազդան–Բջնի (Սոլակ)', road:'Տարածաշրջ. ճ/պ', vehicles:'Mercedes-Benz', cause:'Ընկել է 500մ կիրճ; Ա.Գ., Շ.Գ., Գ.Գ. զոհ' },
+  { year:2023, date:'19.03.2023 00:00', lat:40.312515, lng:43.711709, deaths:1, location:'Արթենի–Արагածավան', road:'Տարածաշրջ. ճ/պ', vehicles:'BMW', cause:'Ընկել է կիրճ; Ե.Ջ. զոհ' },
+  { year:2023, date:'26.03.2023 12:46', lat:40.165012, lng:44.362022, deaths:1, location:'Էջմիածին–Երևան, կմ 14', road:'Էջмիածин–Երևան', vehicles:'Mercedes-Benz', cause:'Բախվել է գովազդային վահանակին' },
+  { year:2023, date:'07.04.2023 08:59', lat:38.887678, lng:46.265713, deaths:1, location:'Մեղրի–Ագարակ, կմ 3', road:'Մեղрի–Ագарак', vehicles:'ВАЗ-2121 + ПАЗ ավտոբուս', cause:'Վարորդ Գ.Ա. զոհ' },
+  { year:2023, date:'11.04.2023 19:48', lat:40.038772, lng:44.406538, deaths:1, location:'Մասис–Ռանչպар, կմ 5', road:'Մасис–Ռанчпар', vehicles:'Mazda 3 + ВАЗ-2104', cause:'Վарорд Ա.Դ. զоհ' },
+  { year:2023, date:'27.04.2023', lat:40.972603, lng:45.180563, deaths:1, location:'Իջևան–Նոյemberg., կմ 12', road:'Иджеван–Ноемберян', vehicles:'Opel Astra + Mercedes Sprinter', cause:'Վarord Ա.Գ. զоհ' },
+  { year:2023, date:'13.05.2023', lat:40.972603, lng:45.180563, deaths:1, location:'Աշтарak–Парпи, կм 1', road:'Аштарак–Парпи', vehicles:'Mercedes-Benz + ВАЗ-21011', cause:'Վarord Г.Э. зоh' },
+  { year:2023, date:'27.08.2023 14:03', lat:39.923095, lng:44.646181, deaths:3, location:'Веди–Нор Угхи, կм 9', road:'Веди–Нор Угхи', vehicles:'Mercedes-Benz', cause:'Ընкел э канал; вар. 15 тар.; 3 зоh' },
+  { year:2023, date:'29.09.2023 07:35', lat:40.275949, lng:44.297769, deaths:1, location:'Воскеваз', road:'Тараծашр. ч/п', vehicles:'Honda', cause:'Кողашржвел; вар. Н.А. зоh' },
+  { year:2023, date:'29.09.2023 07:51', lat:40.302148, lng:44.421995, deaths:1, location:'Аштарак–Нор Гехи, կм 7', road:'Аштарак–Нор Гехи', vehicles:'Nissan + Howo (беռн.)', cause:'Ընкел э кирч; вар. В.М. зоh' },
+  { year:2023, date:'04.11.2023 06:00', lat:40.621972, lng:45.020845, deaths:2, location:'Драхтик–Цовагюх, կм 22', road:'Драхтик–Цовагюх', vehicles:'Ford + Honda', cause:'Чакатаин бахум; 2 зоh, 3 ранен.' },
+  { year:2023, date:'30.10.2023 08:35', lat:40.299774, lng:44.313381, deaths:1, location:'Аштарак–Агарак, կм 5', road:'Аштарак–Агарак', vehicles:'BMW + Mercedes + Scania', cause:'Вар. Г.А. зоh' },
+  { year:2023, date:'21.12.2023 07:36', lat:40.299774, lng:44.313381, deaths:1, location:'Алаверди–Багратaшен, կм 4', road:'Алаверди–Багратaшен', vehicles:'МАН (газ. цис.)', cause:'Кողашржвел; вар. А.К. зоh' },
+  { year:2024, date:'19.03.2024 12:28', lat:39.543476, lng:46.100688, deaths:3, location:'Сисиан–Горис, կм 11', road:'Сисиан–Горис', vehicles:'Бахум', cause:'3 зоh' },
+  { year:2024, date:'11.02.2024 11:31', lat:39.857870, lng:44.687638, deaths:1, location:'Веди–Айгаван, կм 12', road:'Веди–Айгаван', vehicles:'ВАЗ + BMW', cause:'Т.Ш. зоh' },
+  { year:2025, date:'28.12.2025 18:42', lat:40.742507, lng:43.830496, deaths:3, location:'Гюмри–Азатан', road:'Гюмри–Азатан', vehicles:'Мանрամасн. анhайт', cause:'Чакатаин бахум; 3 зоh' },
+  { year:2025, date:'11.07.2025 11:04', lat:39.681118, lng:45.767248, deaths:2, location:'Մ-2, ~կм 34 Сисианից', road:'М-2 (Сисиан–Ереван)', vehicles:'Mitsubishi', cause:'Ընkел э 300м кирч' },
+  { year:2025, date:'18.11.2025 20:37', lat:40.142458, lng:44.121173, deaths:1, location:'Метсамор', road:'Метсамор (кагак)', vehicles:'Мانрамасн. анhайт', cause:'Маhацу ЧТП' },
+  { year:2025, date:'29.12.2025 03:04', lat:40.756771, lng:44.644241, deaths:1, location:'Ванадзор–Дилижан', road:'Ванадзор–Дилижан', vehicles:'Бахум', cause:'1 зоh, 2 ранен.' },
+  { year:2026, date:'22.01.2026 03:12', lat:39.760680, lng:45.166741, deaths:1, location:'Ринд', road:'Вайоцдзор', vehicles:'Краn', cause:'Краn-ı кողашржвел' },
+  { year:2026, date:'10.02.2026 16:54', lat:40.688562, lng:44.283332, deaths:1, location:'Алагяз–Джамшлу', road:'Алагяз–Джамшлу', vehicles:'Бахум', cause:'Маhацу ЧТП' },
+  { year:2026, date:'22.02.2026 10:05', lat:40.249322, lng:44.340404, deaths:1, location:'Сасуник', road:'Арагацотн', vehicles:'Бахум', cause:'Маhацу ЧТП' },
+];
+
+const markers = [];
+incidents.forEach(d => {
+  const m = L.marker([d.lat, d.lng], { icon: icon(d.deaths, d.year) });
+  m.bindPopup(popup(d), { maxWidth: 300 });
+  m.options.year = d.year;
+  m.options.deaths = d.deaths >= 3 ? 3 : d.deaths;
+  m.addTo(map);
+  markers.push(m);
+});
+
+function updateCounter() {
+  const shown = markers.filter(m => map.hasLayer(m));
+  document.getElementById('shown').textContent = shown.length;
+  document.getElementById('total').textContent = markers.length;
+  document.getElementById('deaths_shown').textContent = shown.reduce((s, m) => {
+    const d = incidents.find(i => i.lat === m.getLatLng().lat);
+    return s + (d ? d.deaths : 0);
+  }, 0);
+}
+updateCounter();
+
+function applyFilters() {
+  const activeYears = new Set([...document.querySelectorAll('.yr:checked')].map(c => +c.value));
+  const activeDths  = new Set([...document.querySelectorAll('.dth:checked')].map(c => +c.value));
+  markers.forEach(m => {
+    const dk = m.options.deaths;
+    if (activeYears.has(m.options.year) && activeDths.has(dk)) m.addTo(map);
+    else map.removeLayer(m);
+  });
+  updateCounter();
+}
+document.querySelectorAll('.yr, .dth').forEach(cb => cb.addEventListener('change', applyFilters));
+</script>
+</body>
+</html>
